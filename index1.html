@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Urmi Prajapati — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-VlMZmV3H+J64Zl1kYYxU9vZvT+/3PTa1fC5f4+7z7Fw+tU/nbcMCpX+8+1d2Jr61VZy1B0L9gGkqyyTCMz3B/w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+:root {
+  --bg: #000000;
+  --primary: #ffffff;
+  --secondary: #bbbbbb;
+  --card-bg: #111111;
+  --text-dark: #ffffff;
+  --text-light: #cccccc;
+  --view-btn-color: #ffffff;
+}
+
+body {
+  margin:0; padding:0;
+  background: var(--bg);
+  color: var(--text-dark);
+  font-family:'Nunito', sans-serif;
+  line-height:1.6;
+  scroll-behavior: smooth;
+}
+
+/* === Navbar === */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #111;
+  box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+  display:flex;
+  justify-content:center;
+  z-index: 1000;
+}
+nav ul {
+  display:flex;
+  list-style:none;
+  padding:0.8rem 1rem;
+  margin:0;
+  gap:1.5rem;
+  flex-wrap:wrap;
+}
+nav ul li a {
+  text-decoration:none;
+  color: var(--primary);
+  font-size: 1.4rem;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  transition: color 0.3s, transform 0.3s;
+  position: relative;
+}
+/* underline slide effect */
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--secondary);
+  transition: width 0.3s ease;
+}
+nav ul li a:hover {
+  color: var(--secondary);
+  transform: scale(1.2);
+}
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* Padding for header so navbar doesn’t overlap */
+header {
+  padding: 6rem 8% 3rem;       /* left/right padding thoda bada */
+  display: flex;
+  align-items: center;
+  justify-content: center;     /* dono ko center ke paas rakhega */
+  gap: 4rem;                   /* text aur photo ke beech ka gap */
+}
+
+header img {
+  width: 250px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
+  margin-left: 3rem;           /* 👉 image ko thoda right dhakelne ke liye */
+}
+header img:hover {
+  transform: scale(1.05);
+  box-shadow:0 0 25px rgba(255,255,255,0.4);
+}
+
+#header-text {
+  max-width: 450px;            /* text ka max width */
+  text-align: left;
+}
+
+h1 {font-size:2.8rem; margin:0; color: var(--primary);}
+h2 {margin:3rem 0 1.5rem; font-size:2rem; color:var(--primary); }
+
+/* glow on hover for headings */
+h1:hover, h2:hover {
+  text-shadow: 0 0 10px var(--secondary), 0 0 20px var(--secondary);
+  transition: text-shadow 0.4s ease-in-out;
+}
+
+.section {
+  padding:0 1.5rem 2rem;
+  max-width:1100px; margin:auto;
+  transition: box-shadow 0.4s ease;
+}
+/* subtle glow when hovering a whole section */
+.section:hover {
+  box-shadow: 0 0 25px rgba(255,255,255,0.08);
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5rem;
+}
+
+.card {
+  background:var(--card-bg);
+  padding:1.5rem;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(255,255,255,0.05);
+  transition:transform .4s ease, box-shadow .4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--text-dark);
+  position: relative;
+  overflow: hidden;
+}
+/* gradient border glow */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px;
+  background: linear-gradient(135deg, #ffffff33, #bbbbbb33);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.card:hover::before {
+  opacity: 1;
+}
+.card:hover{
+  transform: perspective(600px) rotateX(4deg) rotateY(-4deg) translateY(-8px);
+  box-shadow:0 16px 30px rgba(255,255,255,0.12);
+}
+.card img {
+  transition: transform 0.5s ease;
+}
+.card:hover img {
+  transform: scale(1.08);
+}
+
+.view-cert-btn{
+  background: var(--view-btn-color);
+  color:#000;
+  border:none;
+  padding:0.6rem 1.3rem;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:1rem;
+  align-self:flex-start;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.view-cert-btn:hover{
+  transform: scale(1.06);
+  box-shadow:0 8px 18px rgba(255,255,255,0.25);
+  background: var(--secondary);
+  color:#000;
+}
+
+a.link{
+  color: var(--primary);
+  text-decoration:none;
+  font-weight:600;
+  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+}
+a.link:hover{
+  color: var(--secondary);
+  text-decoration: underline;
+  text-decoration-color: var(--secondary);
+}
+footer{
+  text-align:center;
+  padding:2rem 1rem;
+  color:#cccccc;
+  font-size:0.9rem;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+p { color: var(--text-light); }
+
+#about p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+.resume-btn {
+  background: var(--view-btn-color);
+  color: #000;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.resume-btn:hover {
+  background: var(--secondary);
+  transform: scale(1.06);
+  box-shadow: 0 8px 18px rgba(255,255,255,0.25);
+}
+
+.skill-card {
+  background: var(--card-bg);
+  padding:1.5rem;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(255,255,255,0.05);
+  transition:transform .3s, box-shadow .3s;
+}
+.skill-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 20px rgba(255,255,255,0.1);
+}
+.skill-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.skill-bar {
+  background: #333;
+  border-radius: 8px;
+  height: 12px;
+  overflow: hidden;
+}
+.skill-fill {
+  background: var(--primary);
+  height: 100%;
+  border-radius: 8px;
+  width: 0;
+  transition: width 1.2s ease-in-out, background 0.3s ease-in-out;
+}
+.skill-card:hover .skill-fill {
+  background: var(--secondary);
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+  <ul>
+    <li><a href="#about"><i class="fas fa-home"></i></a></li>
+    <li><a href="#education"><i class="fas fa-user-graduate"></i></a></li>
+    <li><a href="#skills"><i class="fas fa-tools"></i></a></li>
+    <li><a href="#projects"><i class="fas fa-project-diagram"></i></a></li>
+    <li><a href="#certificates"><i class="fas fa-award"></i></a></li>
+    <li><a href="#hobbies"><i class="fas fa-basketball-ball"></i></a></li>
+    <li><a href="#contact"><i class="fas fa-envelope"></i></a></li>
+    <li><a href="#resume"><i class="fas fa-download"></i></a></li>
+  </ul>
+</nav>
+
+<header>
+  <img src="URMI.jpg" alt="Urmi Prajapati">
+  <div id="header-text">
+    <h1 id="typing"></h1>
+    <h2>Web Developer</h2>
+    <a href="Urmi Original Resume (3)   hcl.pdf" download>
+      <button class="resume-btn">Download Resume</button>
+    </a>
+  </div>
+</header>
+
+<!-- About -->
+<section class="section" id="about">
+  <h2>About Me</h2>
+  <p>Hello! I’m Urmi, a passionate CSE student who loves coding,
+     problem-solving and creating clean, responsive web applications.</p>
+</section>
+
+<!-- Education -->
+<section class="section" id="education">
+  <h2>Education</h2>
+  <div class="grid">
+    <div class="card">
+      <strong>B.Tech in Computer Science</strong><br>
+      Technocrats Institute of Technology, Bhopal<br>
+      2022 – Present
+    </div>
+    <div class="card">
+      <strong>Higher Secondary (12th)</strong><br>
+      Sharda Vidhya Niketan Hr. Sec. School, Guna<br>
+      Percentage: 80.5% (2022)
+    </div>
+    <div class="card">
+      <strong>High School (10th)</strong><br>
+      Sharda Vidhya Niketan Hr. Sec. School, Guna<br>
+      Percentage: 86.7% (2020)
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section class="section" id="skills">
+  <h2>Skills</h2>
+  <div class="grid">
+    <div class="skill-card">
+      <div class="skill-row"><span>HTML & CSS</span><span>85%</span></div>
+      <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-row"><span>Java</span><span>80%</span></div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-row"><span>JavaScript</span><span>60%</span></div>
+      <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-row"><span>C / C++</span><span>50%</span></div>
+      <div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-row"><span>Data Structures & Algorithms</span><span>60%</span></div>
+      <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-row"><span>React</span><span>50%</span></div>
+      <div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="section" id="projects">
+  <h2>Projects</h2>
+  <div style="display:flex; gap:1rem; flex-wrap:nowrap; overflow-x:auto;">
+    <div class="card" style="min-width:250px;">
+      <img src="spotify img.png" alt="Spotify UI Clone" style="width:100%; border-radius:8px; object-fit:cover; margin-bottom:10px;">
+      <strong>Spotify UI Clone</strong>
+      <p>Responsive Spotify UI using HTML, CSS (Flexbox & Grid).</p>
+      <button class="view-cert-btn" onclick="viewProject('https://link-to-spotify-project')">View Project</button>
+    </div>
+    <div class="card" style="min-width:250px;">
+      <img src="portfolio photo.png" alt="Portfolio Website" style="width:100%; border-radius:8px; object-fit:cover; margin-bottom:10px;">
+      <strong>Portfolio Website</strong>
+      <p>This very portfolio built with HTML, CSS and a dash of JS.</p>
+      <button class="view-cert-btn" onclick="viewProject('https://link-to-portfolio-project')">View Project</button>
+    </div>
+    <div class="card" style="min-width:250px;">
+      <img src="crime record.png" alt="CrimeRecordSystem" style="width:100%; border-radius:8px; object-fit:cover; margin-bottom:10px;">
+      <strong>CrimeRecordSystem</strong>
+      <p>A system to record, manage, and track crime records. Built with Java & MySQL.</p>
+      <button class="view-cert-btn" onclick="viewProject('https://github.com/your-username/CrimeRecordSystem')">View Project</button>
+    </div>
+  </div>
+</section>
+
+<!-- Certificates -->
+<section class="section" id="certificates">
+  <h2>Achievements & Certificates</h2>
+  <div class="grid">
+    <div class="card">
+      <span>RamrajTech Internship — C, C++ & Campus Competitive Programming</span>
+      <button class="view-cert-btn" onclick="viewCertificate('All certificates/RamrajTech.png')">View Certificate</button>
+    </div>
+    <div class="card">
+      <span>C Training — Cybrom Technology</span>
+      <button class="view-cert-btn" onclick="viewCertificate('All certificates/Cybroom.png')">View Certificate</button>
+    </div>
+    <div class="card">
+      <span>Oracle Certified Professional — Generative AI</span>
+      <button class="view-cert-btn" onclick="viewCertificate('All certificates/Oracle Gen AI.png')">View Certificate</button>
+    </div>
+    <div class="card">
+      <span>Cyber Security Awareness — Technocrats Institute</span>
+      <button class="view-cert-btn" onclick="viewCertificate('All certificates/Cyber security.png')">View Certificate</button>
+    </div>
+    <div class="card">
+      <span>Internship — Octanet Service</span>
+      <button class="view-cert-btn" onclick="viewCertificate('All certificates/octanet internship.png')">View Certificate</button>
+    </div>
+    <div class="card">
+      <span>Robonauts — Workshop</span>
+      <button class="view-cert-btn" onclick="viewCertificate('All certificates/Robonauts.png')">View Certificate</button>
+    </div>
+    <div class="card">
+      <span>CodeChef — Learning</span>
+      <button class="view-cert-btn" onclick="viewCertificate('All certificates/CodeChef.png')">View Certificate</button>
+    </div>
+    <div class="card">
+      <span>Oracle-badge</span>
+      <button class="view-cert-btn" onclick="viewCertificate('All certificates/oracle badge.jpg')">View Certificate</button>
+    </div>
+    <div class="card">
+      <a href="https://www.codechef.com/users/urmi04" class="link" target="_blank">
+        My CodeChef Competitive Programming Profile
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Hobbies -->
+<section class="section" id="hobbies">
+  <h2>Hobbies</h2>
+  <div class="grid">
+    <div class="card">Playing Basketball</div>
+    <div class="card">Travelling</div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <h2>Contact</h2>
+  <div class="grid">
+    <div class="card">
+      <strong>Email:</strong> <a href="mailto:urmiprajapati707@gmail.com" class="link">urmiprajapati707@gmail.com</a><br>
+      <strong>Phone:</strong> 9981684951<br>
+      <strong>Location:</strong> Bhopal, India
+    </div>
+    <div class="card">
+      <strong>LinkedIn:</strong>
+      <a href="https://www.linkedin.com/in/urmi-prajapati-b6a16527a/" class="link" target="_blank">Urmi Prajapati</a><br>
+      <strong>GitHub:</strong>
+      <a href="https://github.com/urmiprajapati04" class="link" target="_blank">urmiprajapati04</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Urmi Prajapati. All rights reserved.
+</footer>
+
+<script>
+function viewCertificate(path){
+  window.open(path,'_blank');
+}
+function viewProject(link){
+  window.open(link,'_blank');
+}
+
+// Typing effect
+const text = "Hi, I'm  Urmi Prajapati";
+let idx=0;
+function typing(){
+  if(idx<text.length){
+    document.getElementById("typing").innerText += text.charAt(idx);
+    idx++;
+    setTimeout(typing,100);
+  }
+}
+typing();
+</script>
+</body>
+</html>
